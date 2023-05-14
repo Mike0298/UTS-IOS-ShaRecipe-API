@@ -24,7 +24,7 @@ router.get('/:recipe_id', async (req, res) => {
 });
 
 //@route    POST    /api/shareable/
-//@desc     Get a shareable recipe given an id
+//@desc     Create a shareable recipe and return the recipe id
 //@access   Public
 
 router.post('/', async (req, res) => {
@@ -43,7 +43,9 @@ router.post('/', async (req, res) => {
     });
     recipe.code = recipe._id;
     await recipe.save();
-    return res.status(200).json(recipe.code);
+    return res.status(200).json({
+      code: recipe.code,
+    });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
