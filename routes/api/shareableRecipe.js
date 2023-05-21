@@ -3,6 +3,22 @@ const router = express.Router();
 
 const ShareableRecipe = require('../../models/ShareableRecipe');
 
+//@route    GET    /api/shareable/
+//@desc     Get a shareable recipe given an id
+//@access   Public
+
+router.get('/', async (req, res) => {
+  try {
+    let recipes = await ShareableRecipe.find()
+      .sort({ date: -1 })
+      .select(['-date']);
+    return res.status(200).json(recipes);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 //@route    GET    /api/shareable/recipe_id
 //@desc     Get a shareable recipe given an id
 //@access   Public
